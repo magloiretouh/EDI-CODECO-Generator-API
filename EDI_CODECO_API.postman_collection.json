@@ -1,0 +1,141 @@
+{
+  "info": {
+    "_postman_id": "edi-codeco-generator-collection",
+    "name": "EDI CODECO Generator API",
+    "description": "Collection for testing EDI CODECO Generator API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/codeco/health",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "codeco", "health"]
+        },
+        "description": "Check if the API is running and healthy"
+      },
+      "response": []
+    },
+    {
+      "name": "API Info",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/",
+          "host": ["{{base_url}}"],
+          "path": [""]
+        },
+        "description": "Get API information and version"
+      },
+      "response": []
+    },
+    {
+      "name": "Generate CODECO - Valid Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"yardId\": \"419101\",\n  \"client\": \"0001052069\",\n  \"weighbridge_id\": \"244191001345\",\n  \"weighbridge_id_sno\": \"00001\",\n  \"transporter\": \"PROPRE MOYEN\",\n  \"container_number\": \"PCIU9507070\",\n  \"container_size\": \"40\",\n  \"status\": \"01\",\n  \"vehicle_number\": \"028-AA-01\",\n  \"created_by\": \"HCIHABIBS\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/codeco/generate",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "codeco", "generate"]
+        },
+        "description": "Generate CODECO files with valid request data"
+      },
+      "response": []
+    },
+    {
+      "name": "Generate CODECO - Missing Field (Error Test)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"yardId\": \"419101\",\n  \"client\": \"0001052069\",\n  \"weighbridge_id\": \"244191001345\",\n  \"weighbridge_id_sno\": \"00001\",\n  \"transporter\": \"PROPRE MOYEN\",\n  \"container_number\": \"PCIU9507070\",\n  \"container_size\": \"40\",\n  \"status\": \"01\",\n  \"vehicle_number\": \"028-AA-01\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/codeco/generate",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "codeco", "generate"]
+        },
+        "description": "Test error handling - missing created_by field (should return 400)"
+      },
+      "response": []
+    },
+    {
+      "name": "Generate CODECO - Empty Field (Error Test)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"yardId\": \"419101\",\n  \"client\": \"0001052069\",\n  \"weighbridge_id\": \"244191001345\",\n  \"weighbridge_id_sno\": \"00001\",\n  \"transporter\": \"PROPRE MOYEN\",\n  \"container_number\": \"\",\n  \"container_size\": \"40\",\n  \"status\": \"01\",\n  \"vehicle_number\": \"028-AA-01\",\n  \"created_by\": \"HCIHABIBS\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/codeco/generate",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "codeco", "generate"]
+        },
+        "description": "Test error handling - empty container_number field (should return 400)"
+      },
+      "response": []
+    },
+    {
+      "name": "Generate CODECO - Different Container",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"yardId\": \"419102\",\n  \"client\": \"0001052070\",\n  \"weighbridge_id\": \"244191001346\",\n  \"weighbridge_id_sno\": \"00002\",\n  \"transporter\": \"EXPRESS LOGISTICS\",\n  \"container_number\": \"HAPAG0123456\",\n  \"container_size\": \"20\",\n  \"status\": \"02\",\n  \"vehicle_number\": \"456-BB-02\",\n  \"created_by\": \"USER123\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/codeco/generate",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "codeco", "generate"]
+        },
+        "description": "Test with different container and customer data"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000",
+      "type": "string"
+    }
+  ]
+}
